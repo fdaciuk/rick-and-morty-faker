@@ -1,6 +1,8 @@
-# RmFaker
+# RMFaker
 
-**TODO: Add description**
+## Description
+
+A faker library using the Rick and Morty API (https://rickandmortyapi.com/)
 
 ## Installation
 

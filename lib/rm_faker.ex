@@ -1,18 +1,3 @@
-defmodule RmFaker do
-  @moduledoc """
-  Documentation for `RmFaker`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> RmFaker.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+defmodule RMFaker do
+  defdelegate get_char_by_id(id), to: RMFaker.Char.Get, as: :get_char_by_id
 end
