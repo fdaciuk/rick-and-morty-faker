@@ -4,20 +4,22 @@ defmodule RMFaker.Char.Get do
   plug Tesla.Middleware.BaseUrl, "https://rickandmortyapi.com/api/character"
   plug Tesla.Middleware.JSON
 
+  def get_random_char() do
+    Enum.random(1..826)
+    |> get_char_by_id()
+  end
+
   def get_char_by_id(id) do
     get("/#{id}")
     |> handle_request()
   end
 
-  def handle_request({:ok, %Tesla.Env{status: 200, body: body}}) do
-    {:ok, body}
-  end
-
-  def handle_request({:ok, %Tesla.Env{status: status, body: %{"error" => error}}}) when status == 404 or status == 500 do
-    {:error, error}
-  end
-
-  def handle_request({:error, _error} = error) do
-    error
+  defp handle_request(result) do
+    case result do
+      {:ok, %Tesla.Env{status: 200, body: body}} -> {:ok, body}
+      {:ok, %Tesla.Env{status: status, body: %{"error" => error}}}
+        when status == 404 or status == 500 -> {:error, error}
+      {:error, _error} = error -> error
+    end
   end
 end
