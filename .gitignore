@@ -24,3 +24,6 @@ rm_faker-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/data/
+TODO.txt
