@@ -4,6 +4,19 @@ defmodule RMFaker.Services.Api.Char.Get do
   plug Tesla.Middleware.BaseUrl, "https://rickandmortyapi.com/api/character"
   plug Tesla.Middleware.JSON
 
+  def get_chars_by_id(ids) do
+    case Jason.encode(ids) do
+      {:ok, data} -> pick_ids(data)
+      {:error, _} = error -> error
+    end
+  end
+
+  defp pick_ids(str) do
+    str
+    |> String.replace(["[", "]"], "")
+    |> get_char_by_id()
+  end
+
   def get_char_by_id(id) do
     get("/#{id}")
     |> handle_request()

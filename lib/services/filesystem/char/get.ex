@@ -1,6 +1,10 @@
 defmodule RMFaker.Services.Filesystem.Char.Get do
   @not_found {:error, "Character not found"}
 
+  def get_chars_by_id(ids) do
+    {:ok, "Filesystem: #{ids}"}
+  end
+
   def get_char_by_id(id) do
     per_page = 20
 
