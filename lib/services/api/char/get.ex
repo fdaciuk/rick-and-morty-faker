@@ -11,15 +11,20 @@ defmodule RMFaker.Services.Api.Char.Get do
     end
   end
 
+  def get_char_by_id(id) do
+    get("/#{id}")
+    |> handle_request()
+  end
+
+  def get_chars_from_page(page) do
+    get("/?page=#{page}")
+    |> handle_request()
+  end
+
   defp pick_ids(str) do
     str
     |> String.replace(["[", "]"], "")
     |> get_char_by_id()
-  end
-
-  def get_char_by_id(id) do
-    get("/#{id}")
-    |> handle_request()
   end
 
   defp handle_request(result) do
