@@ -21,6 +21,18 @@ defmodule RMFaker.Services.Api.Char.Get do
     |> handle_request()
   end
 
+  def get_chars_by(filter) do
+    filter
+    |> URI.encode_query()
+    |> to_url_with_query_string()
+    |> get()
+    |> handle_request()
+  end
+
+  defp to_url_with_query_string(string) do
+    "/?#{string}"
+  end
+
   defp pick_ids(str) do
     str
     |> String.replace(["[", "]"], "")
