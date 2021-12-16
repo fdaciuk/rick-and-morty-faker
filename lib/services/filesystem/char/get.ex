@@ -2,7 +2,19 @@ defmodule RMFaker.Services.Filesystem.Char.Get do
   @not_found {:error, "Character not found"}
 
   def get_chars_by_id(ids) do
-    {:ok, "Filesystem: #{ids}"}
+    result = ids
+    |> Enum.map(&get_char_by_id/1)
+    |> Enum.filter(&remove_errors/1)
+    |> Enum.map(fn {:ok, data} -> data end)
+
+    {:ok, result}
+  end
+
+  def remove_errors(result) do
+    case result do
+      {:ok, _} -> true
+      {:error, _} -> false
+    end
   end
 
   def get_char_by_id(id) do
