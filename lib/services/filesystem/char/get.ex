@@ -1,4 +1,6 @@
 defmodule RMFaker.Services.Filesystem.Char.Get do
+  alias RMFaker.Services.Filesystem.Char.Filter
+
   @not_found {:error, "Character not found"}
   @page_not_found {:error, "There is nothing here"}
 
@@ -22,6 +24,22 @@ defmodule RMFaker.Services.Filesystem.Char.Get do
   def get_chars_from_page(page) do
     page = if is_integer(page), do: page, else: 1
     get_file_from_disk_by_page(page)
+  end
+
+  def get_chars_by(filter) do
+    # TODO
+    # Buscar em todas as páginas de forma dinâmica
+    # Podemos usar o reduce_while no lugar do map para tratar o caso de erro
+    result = 1..42
+    |> Enum.map(fn page ->
+      case Filter.get_chars_by(filter, fn -> get_file_from_disk_by_page(page) end) do
+        # {:error, _} -> get_file_from_disk_by_page(1)
+        result -> result
+      end
+    end)
+    |> List.flatten()
+
+    {:ok, result}
   end
 
   defp remove_errors(result) do
